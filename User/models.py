@@ -10,10 +10,7 @@ class User(AbstractUser):
     phone = models.CharField(max_length=32, blank = True, validators=[MinLengthValidator(10)])
     email = models.EmailField(max_length=64, db_index=True, unique=True)
     last_login = models.DateTimeField(null=True, blank=True)
-    all_regions = models.BooleanField(db_index=True, default=False)
     is_deleted = models.BooleanField(default=False)
-    auth0_user_id = models.CharField(max_length = 64, blank=True, null=True)
-    auth0_connection_name = models.CharField(max_length = 64, blank=True, null=True)
     password = models.CharField(max_length=140, default='password@123')
     REQUIRED_FIELDS = []
     USERNAME_FIELD = "email"
