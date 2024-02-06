@@ -26,10 +26,3 @@ class User(AbstractUser):
 # Before creating superuser for the first time the foreign key in the database shall be populated with initial data,
 # otherwise the user cannot be created. And for initial migration the line `django.contrib.admin,` and `path('admin/', admin.site.urls),`
 # from the INSTALLED_APPS and root urls .py shall be commented then migrated, then the lines shall be uncommented.
-
-class UserRegions(models.Model):
-    id = models.AutoField(primary_key=True)
-    user = models.ForeignKey(User, on_delete=models.DO_NOTHING)
-
-    class Meta:
-        db_table = 'models_mgmt_user_regions' 
