@@ -1,6 +1,10 @@
 from django.urls import include, path
-# from tokenizer.views import 
+from rest_framework.routers import DefaultRouter
+from tokenizer.views import TokensListViewSet
+
+router = DefaultRouter()
+router.register('list', TokensListViewSet, basename='token-list')
 
 urlpatterns = [
-    # path('', AuthView.as_view()),
+    path('', include(router.urls)),
 ]
