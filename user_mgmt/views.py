@@ -25,7 +25,7 @@ class UsersDetailViewSet(viewsets.ModelViewSet):
     def retrieve(self, request, *args, **kwargs):
         user = self.get_object()
         serializer = self.serializer_class(user)
-        return Response(user)
+        return Response(serializer.data)
     
     def update(self, request, *args, **kwargs):
         user = self.get_object()
