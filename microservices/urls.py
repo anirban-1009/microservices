@@ -21,4 +21,5 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('users/', include('user_mgmt.urls')),
     path('token/', include('tokenizer.urls')),
+    path('preferences/', include('preference_mgmt.urls')),
 ]
