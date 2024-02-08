@@ -14,7 +14,7 @@ class User(AbstractUser):
     password = models.CharField(max_length=140, default='password@123')
     preferred_language = models.CharField(max_length=20, blank=True, choices=[("en", "English"), ("fr", "French"), ("es", "Spanish")], default="en")
     receive_notifications = models.BooleanField(default=True)
-    REQUIRED_FIELDS = []
+    REQUIRED_FIELDS = ["phone"]
     USERNAME_FIELD = "email"
     objects = UserManager()
     
