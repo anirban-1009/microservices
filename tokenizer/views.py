@@ -43,12 +43,24 @@ class TokensDetailViewSet(viewsets.ModelViewSet):
         response = self.serializer_class(self.get_object())
         return Response(response.data,status=status.HTTP_200_OK)
     
-    def destroy(self, request, *args, **kwargs):
+    def update(self, request, *args, **kwargs):
         token = self.get_object()
         user = request.data["username"]
         pwd = request.data["password"]
         if password_check(user, pwd):
             token.delete()
-            return Response({'msg': 'deleted'}, status=status.HTTP_200_OK)
-        else:
-            return Response({'msg': 'UnAuthorized'}, status=status.HTTP_401_UNAUTHORIZED)
+            user= User.objects.get(email=user)
+            token, created = Token.objects.get_or_create(user=user)
+            response = {
+                'token': token.key,
+                'user': user.email,
+                'created' : created,
+                'created_at': token.created
+            }
+            return Response(response, status=status.HTTP_201_CREATED)
+        return Response({'msg': 'UnAuthorized'}, status=status.HTTP_401_UNAUTHORIZED)
+    
+    def destroy(self, request, *args, **kwargs):
+        token = self.get_object()
+        token.delete()
+        return Response({'msg': 'deleted'}, status=status.HTTP_200_OK)
