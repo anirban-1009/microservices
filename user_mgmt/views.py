@@ -2,6 +2,7 @@ from rest_framework.response import Response
 from rest_framework import viewsets, status
 from User.models import User
 from user_mgmt.serializers import UsersSerializer
+from rest_framework.views import APIView
 
 class UsersListViewSet(viewsets.ModelViewSet):
     queryset = User.objects.all()
@@ -27,23 +28,10 @@ class UsersDetailViewSet(viewsets.ModelViewSet):
         serializer = self.serializer_class(user)
         return Response(serializer.data)
     
-    def update(self, request, *args, **kwargs):
-        user = self.get_object()
-        serializer = self.serializer_class(user, data=request.data, context={'id': 'pk'})
-        if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data, status=status.HTTP_200_OK)
-        return Response({'msg': 'Bad Request'}, status=status.HTTP_200_OK)
-    
-    def partial_update(self, request, *args, **kwargs):
-        user = self.get_object()
-        serializer = self.serializer_class(user, data=request.data, context={'id': 'pk'})
-        if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data, status=status.HTTP_200_OK)
-        return Response({'msg': 'Bad Request'}, status=status.HTTP_400_BAD_REQUEST)
-    
     def destroy(self, request, *args, **kwargs):
         user = self.get_object()
         user.delete()
         return Response({'msg': 'Deleted'}, status=status.HTTP_200_OK)
+    
+# class LoginAPIView(APIView):
+#     def post()
