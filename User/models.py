@@ -20,6 +20,9 @@ class User(AbstractUser):
     class Meta:
         db_table = "models_mgmt_user"
 
+    def __str__(self) -> str:
+        return self.email
+
 # Before creating superuser for the first time the foreign key in the database shall be populated with initial data,
 # otherwise the user cannot be created. And for initial migration the line `django.contrib.admin,` and `path('admin/', admin.site.urls),`
 # from the INSTALLED_APPS and root urls .py shall be commented then migrated, then the lines shall be uncommented.
