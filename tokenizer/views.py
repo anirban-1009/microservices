@@ -57,7 +57,7 @@ class TokensDetailViewSet(viewsets.ModelViewSet):
                 'created' : created,
                 'created_at': token.created
             }
-            return Response(response, status=status.HTTP_201_CREATED)
+            return Response(response, status=status.HTTP_200_OK)
         return Response({'msg': 'UnAuthorized'}, status=status.HTTP_401_UNAUTHORIZED)
     
     def destroy(self, request, *args, **kwargs):
