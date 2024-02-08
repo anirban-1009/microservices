@@ -12,6 +12,8 @@ class User(AbstractUser):
     last_login = models.DateTimeField(null=True, blank=True)
     is_deleted = models.BooleanField(default=False)
     password = models.CharField(max_length=140, default='password@123')
+    preferred_language = models.CharField(max_length=20, blank=True, choices=[("en", "English"), ("fr", "French"), ("es", "Spanish")], default="en")
+    receive_notifications = models.BooleanField(default=True)
     REQUIRED_FIELDS = []
     USERNAME_FIELD = "email"
     objects = UserManager()
