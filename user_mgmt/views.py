@@ -16,7 +16,7 @@ class UsersListViewSet(viewsets.ModelViewSet):
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
-        return Response({'msg': 'Bad Request'}, status=status.HTTP_400_BAD_REQUEST)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
     
 class UsersDetailViewSet(viewsets.ModelViewSet):
     queryset = User.objects.all()
@@ -25,7 +25,7 @@ class UsersDetailViewSet(viewsets.ModelViewSet):
     def retrieve(self, request, *args, **kwargs):
         user = self.get_object()
         serializer = self.serializer_class(user)
-        return Response(user)
+        return Response(serializer.data)
     
     def update(self, request, *args, **kwargs):
         user = self.get_object()

@@ -38,7 +38,10 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     "User.apps.UserConfig",
-    "user_mgmt.apps.UserMgmtConfig"
+    "user_mgmt.apps.UserMgmtConfig",
+    'rest_framework',
+    'tokenizer.apps.TokenizerConfig',
+    'rest_framework.authtoken'
 ]
 
 MIDDLEWARE = [
@@ -138,3 +141,12 @@ PASSWORD_HASHERS = [
     "django.contrib.auth.hashers.BCryptSHA256PasswordHasher",
     "django.contrib.auth.hashers.ScryptPasswordHasher",
 ]
+
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework.authentication.BasicAuthentication',
+        'rest_framework.authentication.SessionAuthentication',
+        'rest_framework.authentication.TokenAuthentication',
+        'tokenizer.auth.BearerAuthentication'
+    ]
+}
