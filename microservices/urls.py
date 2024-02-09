@@ -22,4 +22,5 @@ urlpatterns = [
     path('users/', include('user_mgmt.urls')),
     path('token/', include('tokenizer.urls')),
     path('preferences/', include('preference_mgmt.urls')),
+    path('auth/', include('auth_mgmt.urls'))
 ]
