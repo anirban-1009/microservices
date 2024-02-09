@@ -1,6 +1,6 @@
 from django.apps import AppConfig
 
 
-class GroupMgmtConfig(AppConfig):
+class AuthMgmtConfig(AppConfig):
     default_auto_field = 'django.db.models.BigAutoField'
-    name = 'group_mgmt'
+    name = 'auth_mgmt'

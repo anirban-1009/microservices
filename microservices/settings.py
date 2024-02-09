@@ -43,7 +43,7 @@ INSTALLED_APPS = [
     'tokenizer.apps.TokenizerConfig',
     'rest_framework.authtoken',
     'preference_mgmt.apps.PreferenceMgmtConfig',
-    'group_mgmt.apps.GroupMgmtConfig'
+    'auth_mgmt.apps.AuthMgmtConfig',
 ]
 
 MIDDLEWARE = [
