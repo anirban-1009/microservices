@@ -1,6 +1,6 @@
 # Microservice APIs
 
-# MindMap
+## MindMap
 ![Mind Map](MindMap.png)
 
 - registration
