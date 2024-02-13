@@ -4,7 +4,7 @@ from django.contrib.auth.models import Permission, Group
 class PermissionDetailSerializer(serializers.ModelSerializer):
     class Meta:
         model = Permission
-        fields = ['name', 'content_type', 'codename']
+        fields = ['name', 'content_type', 'codename', 'id']
 
 class GroupDetailSerializer(serializers.ModelSerializer):
     class Meta:

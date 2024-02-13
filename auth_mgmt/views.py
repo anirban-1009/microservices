@@ -72,4 +72,20 @@ class GroupPermissonsViewset(viewsets.ModelViewSet):
         serializer = self.get_serializer(group)
         return Response(serializer.data, status=status.HTTP_200_OK)
     
+    def update(self, request, pk=None):
+        group = self.get_object()
+        permissions = request.data["permissions"]
+        for perm in permissions:
+            perm = Permission.objects.get(codename=perm)
+            group.permissions.add(perm)
+        serilaizer = self.get_serializer(group)
+        return Response(serilaizer.data, status=status.HTTP_200_OK)
     
+    def destroy(self, request, pk=None):
+        group = self.get_object()
+        permissions = request.data["permissions"]
+        for perm in permissions:
+            perm = Permission.objects.get(codename=perm)
+            group.permissions.remove(perm)
+        serilaizer = self.get_serializer(group)
+        return Response(serilaizer.data, status=status.HTTP_200_OK)
