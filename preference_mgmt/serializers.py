@@ -10,3 +10,13 @@ class UserCommPreferenceUpdateSerialzier(serializers.ModelSerializer):
     class Meta:
         model = User
         fields = ['preferred_language', 'receive_notifications']
+
+class UserPermissionsDetailSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = ['user_permissions']
+
+class UserGroupsDetailSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = ['groups']
