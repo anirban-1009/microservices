@@ -10,3 +10,11 @@ class GroupDetailSerializer(serializers.ModelSerializer):
     class Meta:
         model = Group
         fields = ['id', 'name']
+
+class GroupPermissionsSerializer(serializers.ModelSerializer):
+    permissions = PermissionDetailSerializer(many=True, required=False)
+
+    class Meta:
+        model: Group = Group
+        fields = [f.name for f in model._meta.fields]
+        fields.append('permissions')

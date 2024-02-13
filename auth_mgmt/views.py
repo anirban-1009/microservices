@@ -1,6 +1,10 @@
 from django.shortcuts import render
 from django.contrib.auth.models import Permission, Group
-from auth_mgmt.serializer import PermissionDetailSerializer, GroupDetailSerializer
+from auth_mgmt.serializer import (
+    PermissionDetailSerializer,
+    GroupDetailSerializer,
+    GroupPermissionsSerializer
+)
 from rest_framework import viewsets, status, decorators
 from rest_framework.response import Response
 
@@ -18,7 +22,7 @@ class GroupDetailViewSet(viewsets.ModelViewSet):
 
     def list(self, request, *args, **kwargs):
         serializer = self.serializer_class(self.queryset, many=True)
-        return Response(serializer.data[0], status=status.HTTP_200_OK)
+        return Response(serializer.data, status=status.HTTP_200_OK)
     
     def create(self, request, *args, **kwargs):
         serializer = self.serializer_class(data=request.data)
@@ -52,3 +56,20 @@ class GroupDetailViewSet(viewsets.ModelViewSet):
         group = self.get_object()
         group.delete()
         return Response({'msg': 'Deleted'}, status=status.HTTP_200_OK)
+    
+############# ASSIGNING PERMISSIONS TO THE GROUPS AND RETRIEVING THEM #############
+    
+class GroupPermissonsViewset(viewsets.ModelViewSet):
+    serializer_class = GroupPermissionsSerializer
+    queryset = Group.objects.all()
+
+    def list(self, request, *args, **kwargs):
+        serializer = self.get_serializer(self.queryset, many=True)
+        return Response(serializer.data, status=status.HTTP_200_OK)
+    
+    def retrieve(self, request, *args, **kwargs):
+        group = self.get_object()
+        serializer = self.get_serializer(group)
+        return Response(serializer.data, status=status.HTTP_200_OK)
+    
+    
