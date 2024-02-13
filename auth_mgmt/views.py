@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django.contrib.auth.models import Permission, Group
 from auth_mgmt.serializer import PermissionDetailSerializer, GroupDetailSerializer
-from rest_framework import viewsets, status
+from rest_framework import viewsets, status, decorators
 from rest_framework.response import Response
 
 class PermissionDetailViewSet(viewsets.ModelViewSet):
@@ -31,3 +31,24 @@ class GroupDetailViewSet(viewsets.ModelViewSet):
         group = self.get_object()
         serializer = self.serializer_class(group)
         return Response(serializer.data, status=status.HTTP_200_OK)
+    
+    def update(self, request, pk=None):
+        group = self.get_object()
+        serializer = self.get_serializer(group, data=request.data, context={'id': 'pk'})
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_200_OK)
+        return Response(serializer.error_message, status=status.HTTP_400_BAD_REQUEST)
+    
+    def partial_update(self, request, *args, **kwargs):
+        group = self.get_object()
+        serializer = self.get_serializer(group, data=request.data, context={'id', 'pk'})
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_200_OK)
+        return Response(serializer.error_messsage, status=status.HTTP_400_BAD_REQUEST)
+    
+    def destroy(self, request, *args, **kwargs):
+        group = self.get_object()
+        group.delete()
+        return Response({'msg': 'Deleted'}, status=status.HTTP_200_OK)
