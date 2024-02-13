@@ -8,8 +8,8 @@ from auth_mgmt.views import (
 
 router = DefaultRouter()
 router.register('permission-list', PermissionDetailViewSet, basename='permission-list')
-router.register('group-detail', GroupDetailViewSet, basename='group-detail')
-router.register('group-detail/permissions', GroupPermissonsViewset, basename='group-detail-permissions')
+router.register('group', GroupDetailViewSet, basename='group-detail')
+router.register('group/permissions', GroupPermissonsViewset, basename='group-detail-permissions')
 
 urlpatterns = [
     path('', include(router.urls)),

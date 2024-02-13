@@ -7,9 +7,10 @@ class PermissionDetailSerializer(serializers.ModelSerializer):
         fields = ['name', 'content_type', 'codename', 'id']
 
 class GroupDetailSerializer(serializers.ModelSerializer):
+    permissions = PermissionDetailSerializer(many=True, required=False)
     class Meta:
         model = Group
-        fields = ['id', 'name']
+        fields = ['id', 'name', 'user_set', 'permissions']
 
 class GroupPermissionsSerializer(serializers.ModelSerializer):
     permissions = PermissionDetailSerializer(many=True, required=False)

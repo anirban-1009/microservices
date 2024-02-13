@@ -6,7 +6,11 @@ from auth_mgmt.serializer import (
     GroupPermissionsSerializer
 )
 from rest_framework import viewsets, status, decorators
+from rest_framework.permissions import IsAuthenticated
+from tokenizer.auth import BearerAuthentication
 from rest_framework.response import Response
+import requests
+from User.models import User
 
 class PermissionDetailViewSet(viewsets.ModelViewSet):
     serializer_class = PermissionDetailSerializer
@@ -15,9 +19,11 @@ class PermissionDetailViewSet(viewsets.ModelViewSet):
     def list(self, request):
         serializer = self.serializer_class(self.queryset, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
+
     
 class GroupDetailViewSet(viewsets.ModelViewSet):
     serializer_class = GroupDetailSerializer
+    authentication_classes = [BearerAuthentication]
     queryset = Group.objects.all()
 
     def list(self, request, *args, **kwargs):
@@ -33,8 +39,13 @@ class GroupDetailViewSet(viewsets.ModelViewSet):
     
     def retrieve(self, request, *args, **kwargs):
         group = self.get_object()
-        serializer = self.serializer_class(group)
-        return Response(serializer.data, status=status.HTTP_200_OK)
+        token = request.headers["Authorization"][7:]
+        url=f"http://localhost:8000/token/detail/{token}"
+        response = requests.get(url)
+        response = response.json()["user"]
+        user = User.objects.get(id=response)
+        group.user_set.add(user)
+        return Response(self.get_serializer(group).data, status=status.HTTP_200_OK)
     
     def update(self, request, pk=None):
         group = self.get_object()
@@ -70,7 +81,6 @@ class GroupPermissonsViewset(viewsets.ModelViewSet):
     def retrieve(self, request, *args, **kwargs):
         group = self.get_object()
         serializer = self.get_serializer(group)
-        return Response(serializer.data, status=status.HTTP_200_OK)
     
     def update(self, request, pk=None):
         group = self.get_object()
