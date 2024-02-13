@@ -1,5 +1,8 @@
 # Microservice APIs
 
+# MindMap
+![Mind Map](MindMap.png)
+
 - registration
 - [register]
     
@@ -243,6 +246,3 @@ curl --location 'http://localhost:8000/users/detail/2' \
         ]
     }'
     ```
-
-# MindMap
-![Mind Map](MindMap.png)
